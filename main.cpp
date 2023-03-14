@@ -1,39 +1,16 @@
-#include <stdio.h>
-#include <pthread.h>
 #include <iostream>
-using namespace std;
-
-
-void *print_hello(void *arg);
-auto add = [](int a, int b) { return a + b; };
-
-void *print_hello(void *arg) {
-    long sum    = 0;
-    long *value = (long *) arg;
-    for (long i = 0; i < 1000000; ++i) {
-        sum += *value;
-    }
-    cout << "Thread: " << sum << endl;
-}
+#include <vector>
+#include <algorithm>
 
 int main() {
-    pthread_t thread;
-    pthread_t thread2;
+    std::vector<int> numbers = { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3 };
 
-    long val = 1;
-    long val2 = 2;
+    std::sort(numbers.begin(), numbers.end(), [](int a, int b) { return a < b; });
 
-    pthread_create(&thread, NULL, print_hello, (void*) &val);
-    pthread_join(thread, NULL);
-
-    pthread_create(&thread2, NULL, print_hello, (void*) &val2);
-    pthread_join(thread2, NULL);
-
-
+    for (auto num : numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
-
-
-
-
